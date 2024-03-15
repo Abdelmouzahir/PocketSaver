@@ -19,7 +19,7 @@ export default function ExpensesItem({id, description , amount, date}) {
           <Text style= {styles.textBase}>{getFormattedDate(date)}</Text>
         </View>
         <View style= {styles.amountContainer}>
-          <Text style= {styles.amount}>${amount.toFixed(2)}</Text>
+          <Text style= {styles.amount}>${amount ? amount.toFixed(2) : 'N/A'}</Text>
         </View>
       </View>
     </Pressable>

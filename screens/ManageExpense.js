@@ -1,9 +1,11 @@
 import { useContext, useLayoutEffect } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TextInput } from "react-native";
 import IconButton from "../UI/IconButton";
 import { GlobalStyles } from "../constants/styles";
 import Button from "../UI/Button";
 import { ExpensesContext } from "../component/Expenses-context";
+import ExpensesForm from "../component/ExpensesForm";
+
 
 
 export default function ManageExpense({route, navigation}) {
@@ -11,6 +13,8 @@ export default function ManageExpense({route, navigation}) {
 
     const editedExpenseId = route.params?.expenseId;
     const isEdited = !!editedExpenseId; // convert to boolean
+
+    const selectedExpense = expensesCtx.expenses.find(expense => expense.id === editedExpenseId);
 
     useLayoutEffect(() =>{
       navigation.setOptions({
@@ -28,9 +32,9 @@ export default function ManageExpense({route, navigation}) {
       navigation.goBack();
     }
 
-    function AddorEditHandler(){
+    function confirmHandler(expenseData){
       if(isEdited){
-        expensesCtx.editExpense(editedExpenseId, expenseData);
+        expensesCtx.updateExpense(editedExpenseId, expenseData);
       }else{
         expensesCtx.addExpense(expenseData);
       }
@@ -39,10 +43,12 @@ export default function ManageExpense({route, navigation}) {
   
   return (
     <View style={styles.container}>
-       <View style={styles.buttons}>
-        <Button style={styles.button}  mode="flat" onPress={cancelHandler}>Cancel</Button>
-        <Button  style={styles.button} onPress={AddorEditHandler}>{isEdited ? 'Update' : 'Add' }</Button>
-       </View>
+      <ExpensesForm 
+       submitButtonLabel={isEdited ? 'Update' : 'Add'} 
+       onSubmit={confirmHandler}
+       onCancel={cancelHandler} 
+       defaultV = {selectedExpense}
+      />
       {isEdited && (
         <View style={styles.deleteContainer}>
           <IconButton icon="trash" onPress={deleteExpense} color={GlobalStyles.colors.error50} size={36} />
@@ -65,15 +71,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderTopColor: GlobalStyles.colors.primary200,
     alignItems: 'center'
-  },
-  buttons : {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  button: {
-    minWidth: 120,
-    marginHorizontal: 8
-  },
+  }
 });
 
