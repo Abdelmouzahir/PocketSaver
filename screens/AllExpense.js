@@ -1,4 +1,4 @@
-import { Text, View,Image } from "react-native";
+import { Text, View,Image, StyleSheet } from "react-native";
 import ExpensesOutput from "../component/ExpensesOutput";
 import { useContext } from "react";
 import { ExpensesContext } from "../component/Expenses-context";
@@ -12,6 +12,26 @@ export default function AllExpense() {
 
    });
   return (
-   <ExpensesOutput expenses={expensesCtx.expenses} expensesPeriod="Total" fallbackText={<><Text>No registered expenses found.</Text>{walletImg}</>} />
-  );
+   <ExpensesOutput expenses={expensesCtx.expenses} expensesPeriod="Total" fallbackText={<View>
+                                                                                          <Text style={styles.text}>No registered expenses found.</Text>
+                                                                                           <View style={styles.img}>
+                                                                                             {walletImg}
+                                                                                            </View>
+                                                                                         </View>} />
+);
 }
+
+
+
+
+const styles = StyleSheet.create({
+    text:{
+        alignItems: 'center',
+        fontSize: 18,
+        fontWeight: 'bold',
+        
+    },
+    img:{
+       marginTop: 22
+    }
+});

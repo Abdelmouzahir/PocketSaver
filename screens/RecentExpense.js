@@ -1,4 +1,4 @@
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, StyleSheet } from "react-native";
 import ExpensesOutput from "../component/ExpensesOutput";
 import { useContext, useEffect, useState } from "react";
 import { ExpensesContext } from "../component/Expenses-context";
@@ -49,6 +49,22 @@ export default function RecentExpense() {
   });
 
   return (
-    <ExpensesOutput expenses={recentExpenses} expensesPeriod="Last 7 days" fallbackText={<><Text>No expenses registered for the last 7 days.</Text>{expenseImg}</>} />
+    <ExpensesOutput expenses={recentExpenses} expensesPeriod="Last 7 days" fallbackText={<View><Text style={styles.text}>No expenses registered for the last 7 days.</Text><View style={styles.img}>{expenseImg}</View></View>} />
   );
 }
+
+
+
+
+
+const styles = StyleSheet.create({
+    text:{
+        alignItems: 'center',
+        fontSize: 18,
+        fontWeight: 'bold',
+        
+    },
+    img:{
+       marginTop: 22
+    }
+});
