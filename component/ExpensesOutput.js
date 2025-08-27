@@ -2,6 +2,7 @@ import { View, StyleSheet, Text} from 'react-native';
 import ExpensesSummary from './ExpensesSummary';
 import ExpensesList from './ExpensesList';
 import { GlobalStyles } from '../constants/styles';
+import ExpensesDefinedBudget from './ExpensesDefinedBudget';
 
 
 export default function ExpensesOutput({expenses, expensesPeriod, fallbackText}) {
@@ -18,6 +19,7 @@ export default function ExpensesOutput({expenses, expensesPeriod, fallbackText})
     return(
         <View style={styles.container} >
          <ExpensesSummary expenses={expenses} periodName={expensesPeriod} />
+         <ExpensesDefinedBudget expenses={expenses} setBudget={0} />
          {content}
         </View>
     );
