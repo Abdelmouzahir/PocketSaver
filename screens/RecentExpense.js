@@ -49,7 +49,7 @@ export default function RecentExpense() {
   });
 
   return (
-    <ExpensesOutput expenses={recentExpenses} expensesPeriod="Last 7 days" fallbackText={<View><Text style={styles.text}>No expenses registered for the last 7 days.</Text><View style={styles.img}>{expenseImg}</View></View>} />
+    <ExpensesOutput expenses={recentExpenses} expensesPeriod="Last 7 days" fallbackText={<View style={styles.fallbackContainer}><Text style={styles.text}>No expenses registered for the last 7 days.</Text><View style={styles.img}>{expenseImg}</View></View>} />
   );
 }
 
@@ -58,13 +58,21 @@ export default function RecentExpense() {
 
 
 const styles = StyleSheet.create({
-    text:{
-        alignItems: 'center',
-        fontSize: 18,
-        fontWeight: 'bold',
-        
-    },
-    img:{
-       marginTop: 22
-    }
+  fallbackContainer: {
+    flex: 1,
+    justifyContent: "center",  // centers vertically
+    alignItems: "center",      // centers horizontally
+    marginTop: 20,
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center", // centers text within its own line
+  },
+  img: {
+    marginTop: 22,
+    width: 200,
+    height: 200,
+    resizeMode: "contain",
+  },
 });
