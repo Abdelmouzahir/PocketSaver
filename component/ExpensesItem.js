@@ -3,67 +3,73 @@ import { GlobalStyles } from '../constants/styles';
 import { getFormattedDate } from "../util/date";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ExpensesItem({id, description , amount, date}) {
+export default function ExpensesItem({ id, description, amount, date, category }) {
   const navigation = useNavigation();
 
-  function expensePress(){
-    navigation.navigate('ManageExpense', {expenseId : id});
-   
+  function expensePress() {
+    navigation.navigate('ManageExpense', { expenseId: id });
   }
 
   return (
-    <Pressable onPress={expensePress}  style={({pressed}) => pressed && styles.pressed}>
-      <View style= {styles.expensesItem}>
-        <View >
-          <Text style= {[styles.textBase, styles.description]}>{description}</Text>
-          <Text style= {styles.textBase}>{getFormattedDate(date)}</Text>
+    <Pressable onPress={expensePress} style={({ pressed }) => pressed && styles.pressed}>
+      <View style={styles.expensesItem}>
+        <View style={styles.details}>
+          <Text style={[styles.textBase, styles.description]}>{description}</Text>
+          <Text style={[styles.textBase, styles.category]}>{category}</Text>
+          <Text style={styles.textBase}>{getFormattedDate(date)}</Text>
         </View>
-        <View style= {styles.amountContainer}>
-          <Text style= {styles.amount}>${amount ? amount.toFixed(2) : 'N/A'}</Text>
+        <View style={styles.amountContainer}>
+          <Text style={styles.amount}>${amount ? amount.toFixed(2) : 'N/A'}</Text>
         </View>
       </View>
     </Pressable>
   );
 }
 
-
 const styles = StyleSheet.create({
-    pressed:{
-        opacity: 0.75
-    },
-    expensesItem: {
-        padding: 12,
-        marginVertical: 8,
-        backgroundColor: GlobalStyles.colors.primary500,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        borderRadius: 6,
-        elevation: 3,
-        shadowColor: GlobalStyles.colors.gray500,
-        shadowOffset: {width: 1, height: 1},
-        shadowOpacity: 0.4
-    },
-    textBase: {
-        color: GlobalStyles.colors.primary50,
-        
-    },
-    description: {
-        fontSize: 16,
-        marginBottom: 4,
-        fontWeight: 'bold'
-    },
-    amountContainer: {
-        paddingHorizontal: 12,
-        paddingVertical: 4,
-        backgroundColor: 'white',
-        borderRadius: 4,
-        justifyContent: 'center',
-        alignItems: 'center',
-        minWidth:80
-    },
-    amount:{
-        color: GlobalStyles.colors.primary500,
-        fontWeight: 'bold'
-    }
-    
+  pressed: {
+    opacity: 0.75,
+  },
+  expensesItem: {
+    padding: 12,
+    marginVertical: 8,
+    backgroundColor: GlobalStyles.colors.primary500,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderRadius: 12, // softened corners
+    elevation: 3,
+    shadowColor: GlobalStyles.colors.gray500,
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.4,
+  },
+  details: {
+    flexShrink: 1,
+  },
+  textBase: {
+    color: GlobalStyles.colors.primary50,
+  },
+  description: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 2,
+  },
+  category: {
+    fontSize: 14,
+    fontStyle: 'italic',
+    color: GlobalStyles.colors.primary200,
+    marginBottom: 4,
+  },
+  amountContainer: {
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: 80,
+  },
+  amount: {
+    color: GlobalStyles.colors.primary500,
+    fontWeight: 'bold',
+  },
 });

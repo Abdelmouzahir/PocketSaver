@@ -9,6 +9,7 @@ import { GlobalStyles } from './constants/styles';
 import { Ionicons } from '@expo/vector-icons';
 import IconButton from './UI/IconButton';
 import ExpensesContextProvider from './component/Expenses-context';
+import Dashboard from './screens/Dashboard';
 import {StyleSheet } from 'react-native';
 
 
@@ -37,6 +38,14 @@ function ExpensesOverview() {
         tabBarLabel: 'All Expenses',
         tabBarIcon: ({ color, size }) => (
           <Ionicons  name="calendar" color={color} size={size} />
+        )
+      
+      }} />
+        <BottomTab.Screen name="DashBoard" component={Dashboard} options={{
+        title: 'Dashboard',
+        tabBarLabel: 'Dashboard',
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons  name="analytics-outline" color={color} size={size} />
         )
       
       }} />
