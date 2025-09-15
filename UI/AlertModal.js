@@ -1,40 +1,43 @@
 import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet, Modal } from "react-native";
 import { GlobalStyles } from "../constants/styles";
 
-export default function AlertModal({ visible, title, message, onCancel, onConfirm, confirmLabel = "Confirm", cancelLabel = "Cancel" }) {
-  if (!visible) return null;
-
+export default function AlertModal({
+  visible,
+  title,
+  message,
+  onCancel,
+  onConfirm,
+  confirmLabel = "Confirm",
+  cancelLabel = "Cancel",
+}) {
   return (
-    <View style={styles.backdrop}>
-      <View style={styles.modalCard}>
-        <Text style={styles.modalTitle}>{title}</Text>
-        <Text style={styles.modalMessage}>{message}</Text>
-        <View style={styles.actions}>
-          <Pressable onPress={onCancel} style={[styles.actionBtn, styles.cancel]}>
-            <Text style={[styles.actionText, styles.cancelText]}>{cancelLabel}</Text>
-          </Pressable>
-          <Pressable onPress={onConfirm} style={[styles.actionBtn, styles.confirm]}>
-            <Text style={[styles.actionText, styles.confirmText]}>{confirmLabel}</Text>
-          </Pressable>
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
+      <View style={styles.backdrop}>
+        <View style={styles.modalCard}>
+          <Text style={styles.modalTitle}>{title}</Text>
+          <Text style={styles.modalMessage}>{message}</Text>
+          <View style={styles.actions}>
+            <Pressable onPress={onCancel} style={[styles.actionBtn, styles.cancel]}>
+              <Text style={[styles.actionText, styles.cancelText]}>{cancelLabel}</Text>
+            </Pressable>
+            <Pressable onPress={onConfirm} style={[styles.actionBtn, styles.confirm]}>
+              <Text style={[styles.actionText, styles.confirmText]}>{confirmLabel}</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
-    </View>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
   backdrop: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    flex: 1,
     backgroundColor: "rgba(0,0,0,0.35)",
     justifyContent: "center",
     alignItems: "center",
     padding: 16,
-    zIndex: 999,
   },
   modalCard: {
     width: "100%",

@@ -119,9 +119,6 @@ const styles = StyleSheet.create({
     color: "black", // 👈 updated to black as requested
     fontWeight: "bold",
     fontSize: 16,
-    textShadowColor: 'rgba(0, 0, 0, 0.1)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 1,
   },
   emptyState: {
     flex: 1,

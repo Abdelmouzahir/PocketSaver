@@ -9,11 +9,15 @@ import {
   Pressable,
 } from "react-native";
 import { GlobalStyles } from "../constants/styles";
+import AlertModal from "../UI/AlertModal";
+
 
 export default function ExpensesDefinedBudget({ expenses }) {
   const [budget, setBudget] = useState(null);
   const [tempBudget, setTempBudget] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showBudgetAlert, setShowBudgetAlert] = useState(false);
+  const [showInvalidAlert, setShowInvalidAlert] = useState(false);
 
   const expensesSum = useMemo(
     () => expenses.reduce((sum, expense) => sum + Number(expense.amount || 0), 0),
@@ -29,7 +33,8 @@ export default function ExpensesDefinedBudget({ expenses }) {
     }
     if (expensesSum > budget && !hasAlertedRef.current) {
       hasAlertedRef.current = true;
-      Alert.alert("Budget exceeded", "Your expenses are over the budget!");
+     // Alert.alert("Budget exceeded", "Your expenses are over the budget!");
+      setShowBudgetAlert(true);
     } else if (expensesSum <= budget) {
       hasAlertedRef.current = false;
     }
@@ -45,7 +50,8 @@ export default function ExpensesDefinedBudget({ expenses }) {
   const saveBudget = () => {
     const value = parseFloat(tempBudget.replace(",", "."));
     if (isNaN(value) || value < 0) {
-      Alert.alert("Invalid amount", "Please enter a valid non-negative number.");
+      //Alert.alert("Invalid amount", "Please enter a valid non-negative number.");
+      setShowInvalidAlert(true);
       return;
     }
     setBudget(value);
@@ -102,6 +108,27 @@ export default function ExpensesDefinedBudget({ expenses }) {
           </View>
         </View>
       </Modal>
+      {/* Budget exceeded alert */}
+<AlertModal
+  visible={showBudgetAlert}
+  title="Budget Exceeded 🚨"
+  message="Your expenses have exceeded your budget. Consider reviewing your spending."
+  onCancel={() => setShowBudgetAlert(false)}
+  onConfirm={() => setShowBudgetAlert(false)}
+  confirmLabel="OK"
+  cancelLabel="Dismiss"
+/>
+
+{/* Invalid input alert */}
+<AlertModal
+  visible={showInvalidAlert}
+  title="Invalid Amount ❌"
+  message="Please enter a valid non-negative number."
+  onCancel={() => setShowInvalidAlert(false)}
+  onConfirm={() => setShowInvalidAlert(false)}
+  confirmLabel="OK"
+  cancelLabel="Dismiss"
+/>
     </View>
   );
 }
